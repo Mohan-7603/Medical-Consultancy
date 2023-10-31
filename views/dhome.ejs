@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" /> 
+    <link rel="stylesheet" type="text/css" href="consult.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Doctor's Dashboard</title>
+</head>
+<body style="background-color: #fff;">
+    <header>
+        <div class="logo">
+            <a href="#"> <img src="logo.png" style="width: 40px;height: 40px;margin-left: 100px;"></a>  
+        </div>
+        <nav class="container">
+            <div class="hamburger-menu" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>            
+            <%if(loggedIn){%>  
+                <ul class="nav">
+                    <li><a href="/doctor">Home</a></li>
+                    <li><a href="/doctor">Patient's List</a></li>
+                    <li><a href="/phistory">Prescription History</a></li>
+                    <li><a href="#profile">My Profile</a></li>
+                </ul>
+                <ul id="menu-items" class="vertical-menu">
+                    <li class="box"><a href="/doctor">Home</a></li>
+                    <li class="box"><a href="/doctor">Patient's List</a></li>
+                    <li class="box"><a href="/phistory">Prescription History</a></li>
+                    <li class="box"><a href="#profile">My Profile</a></li>            
+                </ul>
+            <%}else{%>
+                <ul class="nav">
+                    <li><a href="/dhome">Home</a></li>
+                    <li><a href="/dhome">Patient's List</a></li>
+                    <li><a href="/dhome">Prescription History</a></li>
+                    <li><a href="/dhome">My Profile</a></li>
+                </ul>
+                <ul id="menu-items" class="vertical-menu">
+                    <li class="box"><a href="/dhome">Home</a></li>
+                    <li class="box"><a href="/dhome">Patient's List</a></li>
+                    <li class="box"><a href="/dhome">Prescription History</a></li>
+                    <li class="box"><a href="/dhome">My Profile</a></li>            
+                </ul>
+            <%}%>
+        </nav>
+        <%if(!loggedIn){%>
+            <button class="login-button" id="log" style="margin-right: 20px;border-radius: 5px;" onclick="showLogin()">Login</button>
+        <%}%>
+            <div class="profile">
+                <div class="dropdown">
+                    <button class="profile-button" onclick="toggleDropdown()"> 
+                        <img src="profile.png" alt="picture" style="width: 50px ; height: 50px;margin-right: -40px;">
+                    </button>
+                    <div class="dropdown-content" id="dropdown">
+                        <%if(loggedIn){%>
+                            <a href="/dlogout">Logout</a>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <h1 style="color: rgb(131, 134, 134);">Welcome, <span style="color: #243949;"><%= username%></span></h1>
+
+    <div class="container bootstrap snippets bootdeys" style = "margin-top: 5%;margin-left: 25%;">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 content-card">
+                <div class="card-big-shadow">
+                    <div class="card card-just-text" data-background="color" data-color="yellow" data-radius="none">
+                        <div class="content">
+                            <h6 class="category"></h6>
+                            <h4 class="title"><a href="#">Prescription history</a></h4>
+                            <p class="description"></p>
+                        </div>
+                    </div> <!-- end card -->
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-sm-6 content-card">
+                <div class="card-big-shadow">
+                    <div class="card card-just-text" data-background="color" data-color="orange" data-radius="none">
+                        <div class="content">
+                            <h6 class="category"></h6>
+                            <h4 class="title"><a href="#">Patient's List</a></h4>
+                            <p class="description"></p>
+                        </div>
+                    </div> <!-- end card -->
+                </div>
+            </div>
+        </div>
+        </div>
+<script>
+        function showLogin(){
+            window.location.href = "http://localhost:3000/dlogin";
+        }
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.classList.toggle("show-dropdown");
+        }
+        function toggleMobileMenu() {
+            const menu = document.getElementById("menu-items");
+            menu.classList.toggle("show-mobile-menu");
+        }
+</script>
+</body>
+</html>

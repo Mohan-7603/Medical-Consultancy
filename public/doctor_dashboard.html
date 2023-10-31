@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" /> 
+    <link rel="stylesheet" type="text/css" href="consult.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Doctor's Dashboard</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#"> <img src="logo.png" style="width: 40px;height: 40px;margin-left: 100px;"></a>  
+        </div>
+        <nav class="container">
+            <div class="hamburger-menu" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>            
+            <ul class="nav">
+                <li><a href="/dhome">Home</a></li>
+                <li><a href="/doctor">Patient's List</a></li>
+                <li><a href="/phistory">Prescription History</a></li>
+                <li><a href="#profile">My Profile</a></li>
+            </ul>
+            <ul id="menu-items" class="vertical-menu">
+                <li class="box"><a href="/dhome">Home</a></li>
+                <li class="box"><a href="/doctor">Patient's List</a></li>
+                <li class="box"><a href="/phistory">Prescription History</a></li>
+                <li class="box"><a href="#profile">My Profile</a></li>            
+            </ul>
+            
+        </nav>
+            <div class="profile">
+                <div class="dropdown">
+                    <button class="profile-button" onclick="toggleDropdown()"> 
+                        <img src="profile.png" alt="picture" style="width: 50px ; height: 50px;margin-right: -40px;">
+                    </button>
+                    <div class="dropdown-content" id="dropdown">
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <h1>Patient's List</h1>
+    <div id="patientList">
+    </div>
+
+<script>
+function fetchPatientDetails() {
+    fetch('/api/getPatientDetails')
+        .then(response => response.json())
+        .then(data => {
+            displayPatientDetails(data); 
+        })
+        .catch(error => {
+            console.error('Error fetching patient details:', error);
+        });
+}
+        function showLogin(){
+            window.location.href = "http://localhost:3000/plogin";
+        }
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.classList.toggle("show-dropdown");
+        }
+        function toggleMobileMenu() {
+            const menu = document.getElementById("menu-items");
+            menu.classList.toggle("show-mobile-menu");
+        }
+function displayPatientDetails(patientDetails) {
+    const patientList = document.getElementById('patientList');
+    patientList.innerHTML = ''; 
+
+    patientDetails.forEach(patient => {
+        const patientDiv = document.createElement('div');
+        patientDiv.classList.add('patient-card');
+
+        const patientName = document.createElement('h2');
+        patientName.textContent = `Patient Name: ${patient.patientName}`;
+
+        const chiefComplaint = document.createElement('p');
+        chiefComplaint.textContent = `Cheif Complaint: ${patient.chiefComplaint}`;
+
+        const symptomsDescription = document.createElement('p');
+        symptomsDescription.textContent = `Symptoms Description: ${patient.symptomsDescription}`;
+
+        const symptomsOnset = document.createElement('p');
+        symptomsOnset.textContent = `Symptoms OnSet and Duration: ${patient.symptomsOnset}`;
+
+        const symptomsSeverity = document.createElement('p');
+        symptomsSeverity.textContent = `Symptoms Severity: ${patient.symptomsSeverity}`;
+
+        const recentChanges = document.createElement('p');
+        recentChanges.textContent = `Recent Changes in Health: ${patient.recentChanges}`;
+
+        const timestamp = document.createElement('p');
+        timestamp.textContent = `Timestamp: ${patient.timestamp}`;
+
+        const providePrescriptionButton = document.createElement('button');
+        providePrescriptionButton.textContent = 'Provide Prescription';
+        providePrescriptionButton.classList.add('provide-prescription-button'); 
+        providePrescriptionButton.addEventListener('click', () => {
+            const patientName = patient.patientName;
+            window.location.href = `http://localhost:3000/prescribe?patientName=${encodeURIComponent(patientName)}`;
+        });
+
+
+
+        patientDiv.appendChild(patientName);
+        patientDiv.appendChild(chiefComplaint);
+        patientDiv.appendChild(symptomsDescription);
+        patientDiv.appendChild(symptomsOnset);
+        patientDiv.appendChild(symptomsSeverity);
+        patientDiv.appendChild(recentChanges);
+        patientDiv.appendChild(timestamp);
+        patientDiv.appendChild(providePrescriptionButton);
+        patientList.appendChild(patientDiv);
+    });
+}
+
+window.addEventListener('load', fetchPatientDetails);
+</script>
+</body>
+</html>

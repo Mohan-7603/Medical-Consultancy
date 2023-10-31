@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" /> 
+    <link rel="stylesheet" href="consult.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Medical Consultancy</title>
+</head>
+<body style="background-color: #C6D1DB;">
+    <header>
+        <div class="logo">
+            <a href="#"> <img src="logo.png" style="width: 40px;height: 40px;margin-left: 100px;"></a>  
+        </div>
+        <nav class="container">
+            <div class="hamburger-menu" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>            
+            <ul class="nav">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/consult">Consult Doctor</a></li>
+                <li><a href="/preshistory">Prescriptions</a></li>
+                <li><a href="#profile">My Profile</a></li>
+            </ul>
+            <ul id="menu-items" class="vertical-menu">
+                <li class="box"><a href="/home">Home</a></li>
+                <li class="box"><a href="/consult">Consult Doctor</a></li>
+                <li class="box"><a href="/preshistory">Prescriptions</a></li>
+                <li class="box"><a href="#profile">My Profile</a></li>            
+            </ul>
+            
+        </nav>
+            <div class="profile">
+                <div class="dropdown">
+                    <button class="profile-button" onclick="toggleDropdown()"> 
+                        <img src="profile.png" alt="picture" style="width: 50px ; height: 50px;margin-right: -40px;">
+                    </button>
+                    <div class="dropdown-content" id="dropdown">
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <h1>HealthCheck Consultation Request Form</h1><br>
+    <form id="consultationForm" method="post">
+          <div class="form-group">
+              <label for="patientName">Patient Name:</label>
+              <input type="text" id="patientName" name="patientName" required><br><br>
+          </div>
+          <div class="form-group">
+              <label for="chiefComplaint">Chief Complaint:</label>
+              <input type="text" id="chiefComplaint" name="chiefComplaint" required><br><br>
+          </div>
+          <div class="form-group">
+              <label for="symptomsDescription">Description of Symptoms:</label>
+              <textarea id="symptomsDescription" name="symptomsDescription" rows="5" required></textarea><br><br>
+          </div>
+          <div class="form-group">
+              <label for="symptomsOnset">Onset and Duration of Symptoms:</label>
+              <input type="text" id="symptomsOnset" name="symptomsOnset" required><br><br>
+          </div>
+          <div class="form-group">
+              <label for="symptomsSeverity">Severity of Symptoms:</label>
+              <input type="text" id="symptomsSeverity" name="symptomsSeverity" required><br><br>
+          </div>
+          <div class="form-group">
+              <label for="recentChanges">Any Recent Changes in Health:</label>
+              <textarea id="recentChanges" name="recentChanges" rows="3" ></textarea><br><br>
+          </div>
+  
+        <button type="submit">Request Consultation</button>
+    </form>
+    <script>
+        function showLogin(){
+            window.location.href = "http://localhost:3000/plogin";
+        }
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.classList.toggle("show-dropdown");
+        }
+        function toggleMobileMenu() {
+            const menu = document.getElementById("menu-items");
+            menu.classList.toggle("show-mobile-menu");
+        }
+        document.getElementById('consultationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form input values
+            const patientName = document.getElementById('patientName').value;
+            const chiefComplaint = document.getElementById('chiefComplaint').value;
+            const symptomsDescription = document.getElementById('symptomsDescription').value;
+            const symptomsOnset = document.getElementById('symptomsOnset').value;
+            const symptomsSeverity = document.getElementById('symptomsSeverity').value;
+            const recentChanges = document.getElementById('recentChanges').value;
+
+            // Create an object to send to the server
+            const requestData = {
+                patientName, // Corrected field name
+                chiefComplaint, // Corrected field name
+                symptomsDescription,
+                symptomsOnset,
+                symptomsSeverity,
+                recentChanges,
+            };
+
+            // Send data to the server using the fetch API
+            fetch('/api/requestConsultation', {
+                method: 'POST',
+                body: JSON.stringify(requestData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Consultation requested successfully.');
+                    document.getElementById('consultationForm').reset();
+                } else {
+                    alert('Error requesting consultation.');
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>
+   

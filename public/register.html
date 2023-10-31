@@ -1,0 +1,222 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <link rel="stylesheet" href="login.css">
+      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+      <title>Hospital Management System</title>
+  </head>
+  <body>
+    <div class="container-fluid register">
+        <div class="row">
+            <div class="col-md-3 register-left" id="welcome-section">
+                <img src="https://img.freepik.com/free-vector/people-walking-sitting-hospital-building-city-clinic-glass-exterior-flat-vector-illustration-medical-help-emergency-architecture-healthcare-concept_74855-10130.jpg?size=626&ext=jpg&ga=GA1.2.1697810792.1680012387&semt=ais" alt="" />
+                <h3>Welcome</h3>
+                <p style="margin-top: -11%;">You are 30 seconds away from solving your problems</p>
+                <p id="user-type-text" style="margin-top: -20%;">Are you a doctor? Click below</p>
+                <button class="btn btn-light w-50" style="margin-top: -23%;" id="loginButton"  onclick="toggleLoginType()">Doctor Login</button><br/>
+            </div>
+            <div class="col-md-9 register-right">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h1 class="register-heading">Patient Signup</h1>
+                    <form id="registrationForm" action = "/register" method = "POST">
+                      <div class="row register-form" style="width: 90%;margin-left: 8%;">
+                        <p class="text-danger lead">*Please fill all the required fields</p>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="fName">First Name *</label>
+                                  <input type="text" id="fName" class="form-control"  name="firstName" required/>
+                              </div>
+                              <div class="form-group">
+                                <label for="lName">Last Name *</label>
+                                  <input type="text" id="lName" class="form-control"  name="lastName" required/>
+                              </div>
+                              <div class="form-group">
+                                <label for="password">Password *</label>
+                                  <input type="password" id = "password" class="form-control" name="password" required/>
+                              </div>
+                              <div class="form-group">
+                                <label for="cpassword">Confirm Password *</label>
+                                  <input type="password" id = "cpassword" class="form-control" value="" required/>
+                              </div>
+                              <div class="form-group">
+                                  <div class="maxl">
+                                      <label class="radio inline"> 
+                                          <input type="radio" name="gender" value="male" >
+                                          <span> Male </span> 
+                                      </label>
+                                      <label class="radio inline"> 
+                                          <input type="radio" name="gender" value="female">
+                                          <span>Female </span> 
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="email">Email *</label>
+                                  <input type="email" id = "email" class="form-control" name="email" required/>
+                              </div>
+                              <div class="form-group">
+                                <label for="phone">Phone *</label>
+                                  <input type="text" minlength="10" maxlength="10" id="phone" name="txtEmpPhone" class="form-control" value="" required/>
+                              </div>
+                              <div class="form-group">
+                                <label for="location">Location *</label>
+                                  <input type="text" id="location" class="form-control" required/>
+                              </div>
+                              <div class="form-group">
+                                <label for="birthdate">Date of Birth *</label>
+                                <input type="date" id="birthdate" class="form-control" required/>
+                            </div>                 
+                          </div>
+                          <div class="row">
+                            <div class="col-8">
+                                <input type="submit" class="btnRegister"  value="Register"/>
+                            </div>
+                          </div>
+                          <div class="row justify-content-end mt-3">
+                            <div class="col"></div>
+                            <div class="col-5">
+                              <p class="create ms-2 " id="create">Already have an account? <span class="text-primary custom" onclick="showPatientLogin()">login</span></p>
+                            </div>
+                            <div class="col"></div>
+                          </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      function toggleLoginType() {
+          var userTypeText = document.getElementById("user-type-text");
+          var create = document.getElementById("create");
+          if (userTypeText.innerHTML === "Are you a doctor? Click below") {
+              userTypeText.innerHTML = "Are you a patient? Click below";
+              document.querySelector("#loginButton").innerText = "Patient Login";
+              create.style.display = "none";
+
+          } else {
+              userTypeText.innerHTML = "Are you a doctor? Click below";
+              document.querySelector("#loginButton").innerText = "Doctor Login";
+              create.style.display = "block";
+          }
+      }
+
+    function showPatientLogin(){
+      window.location.href = "http://localhost:3000/plogin"
+    }
+
+    function showSuccessToast() {
+      Toastify({
+        text: 'Registered successfully',
+        duration: 3000, 
+        gravity: 'top', 
+        position: 'right', 
+        backgroundColor: 'green',
+      }).showToast();
+    }
+
+    document.getElementById("registrationForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+
+    const firstName = document.getElementById("fName").value;
+    const lastName = document.getElementById("lName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const cpassword = document.getElementById("cpassword").value;
+    const phone = document.getElementById("phone").value;
+    const gender = document.querySelector('input[name="gender"]:checked');
+    const location = document.getElementById("location").value;
+    const birthdate = document.getElementById("birthdate").value;
+
+    // Email validation using a regular expression
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    if (!email.match(emailRegex)) {
+      alert("Invalid email address");
+      return;
+    }
+
+    // Password length validation
+    if (password.length < 8 || password.length > 12) {
+      alert("Password must be 8 to 12 characters");
+      return;
+    }
+
+    // First name and last name length validation
+    if (firstName.length < 8 || lastName.length > 20) {
+      alert("First name and last name must be 8 to 20 characters");
+      return;
+    }
+
+    // Mobile number validation
+    if (phone.length !== 10 || isNaN(phone)) {
+      alert("Mobile number should have exactly 10 numbers");
+      return;
+    }
+
+    // Gender validation
+    if (!gender) {
+      alert("Gender is required");
+      return;
+    }
+
+    // Date of birth validation
+    const currentDate = new Date();
+    const dob = new Date(birthdate);
+    const eightYearsAgo = new Date();
+    eightYearsAgo.setFullYear(currentDate.getFullYear() - 8);
+    if (dob > eightYearsAgo) {
+      alert("You should at least 8 years old");
+      return;
+    }
+
+    if (password !== cpassword) {
+      alert("Password and Confirm Password do not match");
+      return;
+    }
+    
+    const formData = {
+      firstName: document.getElementById("fName").value,
+      lastName: document.getElementById("lName").value,
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+    };
+
+    fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          showSuccessToast(); 
+          setTimeout(() => {
+            window.location.href = 'http://localhost:3000/plogin'; 
+          }, 2000);
+        } else {
+          alert("Registration failed. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+
+    </script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  </body>
+  </html>

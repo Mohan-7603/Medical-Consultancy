@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" /> 
+    <link rel="stylesheet" href="home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Medical Consultancy</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#"> <img src="logo.png" style="width: 40px;height: 40px;margin-left: 100px;"></a>  
+        </div>
+        <nav class="container">
+            <div class="hamburger-menu" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>         
+            <%if(loggedIn){%>    
+                <ul class="nav">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/consult">Consult Doctor</a></li>
+                    <li><a href="/preshistory">Prescriptions</a></li>
+                    <li><a href="#">My Profile</a></li>
+                </ul>
+                <ul id="menu-items" class="vertical-menu">
+                    <li class="box"><a href="/home">Home</a></li>
+                    <li class="box"><a href="/consult">Consult Doctor</a></li>
+                    <li class="box"><a href="/preshistory">Prescriptions</a></li>
+                    <li class="box"><a href="#profile">My Profile</a></li>            
+                </ul>
+            <%}else{%>
+                <ul class="nav">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/home">Consult Doctor</a></li>
+                    <li><a href="/home">Prescriptions</a></li>
+                    <li><a href="#">My Profile</a></li>
+                </ul>
+                <ul id="menu-items" class="vertical-menu">
+                    <li class="box"><a href="/home">Home</a></li>
+                    <li class="box"><a href="/home">Consult Doctor</a></li>
+                    <li class="box"><a href="/home">Prescriptions</a></li>
+                    <li class="box"><a href="#">My Profile</a></li>            
+                </ul>
+            <%}%>
+        </nav>
+            <%if(!loggedIn){%>
+                <button class="login-button" id="log"  onclick="showLogin()">Login/Register</button>
+            <%}%>
+            <div class="profile">
+                <div class="dropdown">
+                    <button class="profile-button" onclick="toggleDropdown()"> 
+                        <img src="profile.png" alt="picture" style="width: 40px ; height: 40px;margin-right: -40px;">
+                    </button>
+                    <div class="dropdown-content" id="dropdown">
+                        <%if(loggedIn){%>
+                            <a href="/logout">Logout</a>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <div class="background" style="margin-top: 10%;width: 40%;margin-left: 9%;">
+        <div class="Text">
+            <h1 style="color: rgb(252, 253, 253);">Welcome, <span style="color: #243949;"><%= username%></span></h1>
+            <h1 style="color: rgb(252, 253, 253);">We Are Here For You</h1>
+            <h1 class="Second" style="margin-top: 10px; color: rgb(254, 253, 253);">Tell Your Problem With Us</h1>
+            <p style="color: rgb(248, 247, 246);">Get started to consult your doctor online using our medical consultancy by clicking the button below</p>
+
+        </div>
+        <div>
+            <%if(loggedIn){%>
+                <button class="rounded-3" style="font-weight: bold; color: rgb(254, 254, 255);"  onclick="showConsult()">Consult Your Doctor</button>
+            <%}else{%>
+                <button class="rounded-3" style="font-weight: bold; color: rgb(254, 254, 255);"  onclick="showAlert()">Consult Your Doctor</button> 
+            <%}%>
+        </div>
+    </div>
+    <script>
+        function showLogin(){
+            window.location.href = "http://localhost:3000/plogin";
+        }
+        function showConsult(){
+            window.location.href = "http://localhost:3000/consult";
+        }
+        function showAlert(){
+            alert("Please login to continue");
+        }
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.classList.toggle("show-dropdown");
+        }
+        function toggleMobileMenu() {
+            const menu = document.getElementById("menu-items");
+            menu.classList.toggle("show-mobile-menu");
+        }
+    </script>
+</body>
+</html>
+   

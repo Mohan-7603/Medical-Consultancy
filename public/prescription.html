@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Doctor Prescription</title>
+    <style>
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body{
+    background-image: url('https://img.freepik.com/free-vector/polygonal-background_53876-43470.jpg?w=740&t=st=1697171697~exp=1697172297~hmac=1b2ce7950ee676f628b46510f4431a32460137ac377263faee48f42f45db782b');
+    background-size: cover;
+  }
+  header {
+    background-color: #243949;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 8%;
+  }
+  
+  .logo a {
+    text-decoration: none;
+    color: #fff;
+    margin-left: -20px;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin-top: 10px;
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  .nav {
+    margin-top: -28px;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+  }
+  
+  nav ul li a:hover {
+    color: #d09707;
+  }
+  
+  .login-button {
+    background-color: #d09707;
+    border-radius: 3px;
+    margin-right: -30px;
+    padding: 5px 15px;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  h1 {
+    color: #187aac;
+    text-align: center; 
+    position: relative; 
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    top: 80px; 
+    left: 400px;
+}
+
+  
+  .profile {
+    image-resolution: 160px;
+  }
+
+  
+  .profile-button {
+    background-color: transparent;
+    border: none;
+    margin-right: 53px;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 50px;
+    right: 0;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .show-dropdown {
+    display: block;
+  }
+  
+  .hamburger-menu {
+    display: block;
+    cursor: pointer;
+    width: 30px;
+    height: 20px;
+    top: -2px;
+    position: relative;
+    left: -120px;
+  }
+  
+  .bar {
+    width: 90%;
+    height: 3px;
+    background-color: #fff;
+    margin: 4px 0;
+    transition: 0.4s;
+  }
+  
+  #menu-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 49px;
+    left: 0;
+    background-color: #fff;
+    width: 20%;
+    text-align: center;
+    display: none;
+  }
+  .box {
+    width: 100%;
+  }
+  .box:hover {
+    background-color: #243949;
+  }
+  
+  #menu-items.show-mobile-menu {
+    display: block;
+  }
+  
+  #menu-items li {
+    padding: 10px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #menu-items li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
+        
+        #prescriptionForm {
+            max-width: 600px;
+            margin-left: 100px;
+            margin-top:15px;
+            margin-bottom:20px;
+            background-color: rgba(255, 255, 255,0.7);
+            padding: 50px;
+            padding-left: 25px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        label {
+            font-weight: bold;
+            margin-left: 10%;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-left: 10%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        textarea{
+            min-width: 80%;
+            max-width: 80%;
+            min-height: 300px;
+            max-height: 300px;
+        }
+        
+        button[type="submit"] {
+            background-color: #66b2ec;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-left: 39%;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+     <header>
+        <div class="logo">
+            <a href="#"> <img src="logo.png" style="width: 40px;height: 40px;margin-left: 100px;"></a>  
+        </div>
+        <nav class="container">
+            <div class="hamburger-menu" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>            
+            <ul class="nav">
+                <li><a href="/dhome">Home</a></li>
+                <li><a href="/doctor">Patient's List</a></li>
+                <li><a href="/phistory">Prescription History</a></li>
+                <li><a href="#profile">My Profile</a></li>
+            </ul>
+            <ul id="menu-items" class="vertical-menu">
+                <li class="box"><a href="/dhome">Home</a></li>
+                <li class="box"><a href="/doctor">Patient's List</a></li>
+                <li class="box"><a href="/phistory">Prescription History</a></li>
+                <li class="box"><a href="#profile">My Profile</a></li>            
+            </ul>
+            
+        </nav>
+            <div class="profile">
+                <div class="dropdown">
+                    <button class="profile-button" onclick="toggleDropdown()"> 
+                        <img src="profile.png" alt="picture" style="width: 50px ; height: 50px;margin-right: -40px;">
+                    </button>
+                    <div class="dropdown-content" id="dropdown">
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <h1>Doctor Prescription</h1>
+    <form id="prescriptionForm" method="post">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" id="patientName" name="patientName" required><br><br>
+        
+        <label for="prescription">Prescription:</label>
+        <textarea id="prescription" name="prescription" required></textarea><br><br>
+        
+        <button type="submit">Provide Prescription</button>
+    </form>
+    <img src="pres.png" style="margin-left: 60%;margin-top: -55%;">
+
+    <script>
+        document.getElementById('prescriptionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const patientName = document.getElementById('patientName').value;
+            const prescription = document.getElementById('prescription').value;
+
+            fetch('/api/providePrescription', {
+                method: 'POST',
+                body: JSON.stringify({ patientName, prescription }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert('Prescription provided successfully.');
+
+                    const patientIndex = patientDetails.findIndex(patient => patient.patientName === patientName);
+                    if (patientIndex !== -1) {
+                        patientDetails.splice(patientIndex, 1);
+                        displayPatientDetails(patientDetails);
+                    }
+                } else {
+                    alert('Error providing prescription.');
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const patientName = urlParams.get('patientName');
+            if (patientName) {
+                document.getElementById('patientName').value = patientName;
+            }
+        });
+        function showLogin(){
+            window.location.href = "http://localhost:3000/plogin";
+        }
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.classList.toggle("show-dropdown");
+        }
+        function toggleMobileMenu() {
+            const menu = document.getElementById("menu-items");
+            menu.classList.toggle("show-mobile-menu");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="consult.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Prescriptions</title>
+    <style>
+        /* Add your CSS styles here */
+        /* Style the container */
+        body{
+            background-image: url('https://img.freepik.com/free-vector/polygonal-background_53876-43470.jpg?w=740&t=st=1697171697~exp=1697172297~hmac=1b2ce7950ee676f628b46510f4431a32460137ac377263faee48f42f45db782b');
+            background-size: cover;
+        }
+        .presContainer {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255,0.2);
+        }
+    
+        #prescriptionList {
+            margin-top: 5%;
+            margin-left: 28%;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    
+        #prescriptionList li {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            width: calc(57.33% - 20px); /* Adjust the width as needed */
+        }
+    
+        #prescriptionList strong {
+            font-weight: bold;
+        }
+    
+        #prescriptionList strong + strong,
+        #prescriptionList br {
+            margin-top: 10px;
+        }
+    
+        #prescriptionList li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #f5f5f5;
+        }
+    </style>
+    
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#"> <img src="logo.png" style="width: 40px;height: 40px;margin-left: 100px;"></a>  
+        </div>
+        <nav class="container">
+            <div class="hamburger-menu" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>            
+            <ul class="nav">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/consult">Consult Doctor</a></li>
+                <li><a href="/preshistory">Prescriptions</a></li>
+                <li><a href="#profile">My Profile</a></li>
+            </ul>
+            <ul id="menu-items" class="vertical-menu">
+                <li class="box"><a href="/home">Home</a></li>
+                <li class="box"><a href="/consult">Consult Doctor</a></li>
+                <li class="box"><a href="/preshistory">Prescriptions</a></li>
+                <li class="box"><a href="#profile">My Profile</a></li>            
+            </ul>
+        </nav>
+            <div class="profile">
+                <div class="dropdown">
+                    <button class="profile-button" onclick="toggleDropdown()"> 
+                        <img src="profile.png" alt="picture" style="width: 50px ; height: 50px;margin-right: -40px;">
+                    </button>
+                    <div class="dropdown-content" id="dropdown">
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+    </header>
+    <div class="presContainer">
+        <h1>Prescription Provided</h1>
+        <ul id="prescriptionList"></ul>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.classList.toggle("show-dropdown");
+        }
+        function toggleMobileMenu() {
+            const menu = document.getElementById("menu-items");
+            menu.classList.toggle("show-mobile-menu");
+        }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                fetch("/api/getPatientPrescriptions")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        displayPrescriptions(data);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching patient prescriptions:", error);
+                    });
+
+                function displayPrescriptions(prescriptions) {
+                    const prescriptionList = document.getElementById("prescriptionList");
+                    prescriptionList.innerHTML = "";
+
+                    prescriptions.forEach((prescription) => {
+                        const listItem = document.createElement("li");
+                        listItem.innerHTML = `
+                            <strong>Patient Name:</strong> ${prescription.patientName}<br>
+                            <strong>Chief Complaint:</strong> ${prescription.chiefComplaint}<br>
+                            <strong>Prescription:</strong> ${prescription.prescription}
+                        `;
+                        prescriptionList.appendChild(listItem);
+                    });
+                }
+            });
+    </script> 
+</body>
+</html>
